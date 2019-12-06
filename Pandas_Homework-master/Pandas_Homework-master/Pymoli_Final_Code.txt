@@ -1,0 +1,430 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+import numpy as np
+
+
+# In[2]:
+
+
+pymoli = "purchase_data.csv"
+
+
+pymoli_df = pd.read_csv(pymoli)
+
+pymoli_df.head()
+
+
+# In[3]:
+
+
+players_count = len(pymoli_df["SN"].unique())
+players_count
+
+
+# In[4]:
+
+
+Total_Players_df= pd.DataFrame({
+                                 "Total Players":[players_count]})
+
+Total_Players_df
+
+
+# In[5]:
+
+
+unique_items_count = len(pymoli_df["Item ID"].unique())
+unique_items_count
+
+
+# In[7]:
+
+
+average_price = pymoli_df["Price"].mean()
+
+average_price
+
+
+# In[8]:
+
+
+number_of_purchases = pymoli_df["SN"].count()
+number_of_purchases
+
+
+# In[9]:
+
+
+total_revenue = pymoli_df["Price"].sum()
+ 
+total_revenue
+
+
+# In[10]:
+
+
+print("Purchasing Analysis (Total)")
+purchasing_analysis_table = pd.DataFrame({"Number of Unique Items": [unique_items_count],
+                                          "Average Price":[f"${average_price}"],
+                                          "Number of Purchases":[number_of_purchases],
+                                          "Total Revenue" :[f"${total_revenue}"]})
+purchasing_analysis_table
+
+
+# In[11]:
+
+
+grouped_data = pymoli_df.groupby(["Gender"])
+grouped_data
+
+
+# In[12]:
+
+
+gender_count = pymoli_df["Gender"].unique()
+gender_count
+
+
+# In[13]:
+
+
+sum_gender =  grouped_data["Gender"].count()
+sum_gender
+
+
+# In[14]:
+
+
+gender_percentage = (pymoli_df["Gender"].value_counts()/pymoli_df["Gender"].count())*100
+gender_percentage.head()
+
+
+# In[15]:
+
+
+array_gender = pymoli_df["Gender"].value_counts()
+array_gender
+
+
+# In[16]:
+
+
+print("Gender Demographics")
+
+gender_table = pd.DataFrame({"Total Count":array_gender,
+                             "Percentage of Players":gender_percentage})
+gender_table.head()
+
+
+# In[17]:
+
+
+grouped_data = pymoli_df.groupby(["Gender"])
+grouped_data
+
+
+# In[18]:
+
+
+average_purchase = grouped_data["Price"].mean()
+average_purchase
+
+
+# In[19]:
+
+
+total_purchase_value = grouped_data["Price"].sum()
+total_purchase_value
+
+
+# In[20]:
+
+
+average_total_price = (grouped_data["Price"].mean())*780/576
+average_total_price 
+
+
+# In[21]:
+
+
+print("Purchasing Analysis (Gender)")
+purchasing_analysis_gender_table = pd.DataFrame({"Purchase Count":sum_gender,
+                                                 "Average Purchase Price": average_purchase, 
+                                                 "Total Purchase Value":total_purchase_value, 
+                                                 "Avg Total Purchase per Person":average_total_price })
+purchasing_analysis_gender_table.head()
+
+
+# In[22]:
+
+
+import pandas as pd
+import numpy as np
+
+
+# In[23]:
+
+
+pymoli = "purchase_data.csv"
+
+
+pymoli_df = pd.read_csv(pymoli)
+
+pymoli_df.head()
+
+
+# In[24]:
+
+
+pymoli_df
+age_bins = [0, 9, 14, 19, 24, 29,34,39,100]
+
+
+age_names = ["<10", "10-14", "15-19", "20-24", "25-29","30-34","35-39","40+"]
+
+
+# In[25]:
+
+
+pymoli_df["Age Demographics"] = pd.cut(pymoli_df["Age"], age_bins, labels = age_names)
+pymoli_df
+
+
+# In[26]:
+
+
+pymoli_df = pymoli_df.groupby(["Age Demographics"])
+pymoli_df
+
+
+# In[27]:
+
+
+players_count_age = pymoli_df["Age"].unique()
+players_count_age
+
+
+# In[28]:
+
+
+age_count = pymoli_df["Age Demographics"].count()
+age_count
+
+
+# In[29]:
+
+
+age_percentage =(pymoli_df["Age Demographics"].count()/780)*100
+
+age_percentage
+
+
+# In[33]:
+
+
+print("Age Demographics")
+
+age_demographics_table = pd.DataFrame({"Total Count":age_count,
+                             "Percentage of Players":age_percentage })
+age_demographics_table.head(8)
+
+
+# In[34]:
+
+
+age_purchase_count = pymoli_df["Age"].count()
+age_purchase_count
+
+
+# In[35]:
+
+
+average_purchase_price =pymoli_df["Price"].mean()
+average_purchase_price
+
+
+# In[36]:
+
+
+total_purchase_value = pymoli_df["Price"].sum()
+total_purchase_value
+
+
+# In[37]:
+
+
+Avg_Total_Purchase_per_Person =pymoli_df["Price"].mean()*780/576
+Avg_Total_Purchase_per_Person
+
+
+# In[41]:
+
+
+print("Purchasing Analysis (Age)")
+purchasing_analysis_gender_table = pd.DataFrame({"Purchase Count":age_purchase_count,
+                                                 "Average Purchase Price": average_purchase_price, 
+                                                 "Total Purchase Value":total_purchase_value, 
+                                                 "Avg Total Purchase per Person":Avg_Total_Purchase_per_Person})
+purchasing_analysis_gender_table.head(8)
+
+
+# In[42]:
+
+
+import pandas as pd
+import numpy as np
+
+
+# In[43]:
+
+
+pymoli = "purchase_data.csv"
+
+
+pymoli_df = pd.read_csv(pymoli)
+
+pymoli_df.head()
+
+
+# In[44]:
+
+
+top_spenders= pymoli_df[["Purchase ID","SN", "Price"]]
+top_spenders.head()
+
+
+# In[45]:
+
+
+SN_purchase_count = pymoli_df["SN"].value_counts()
+SN_purchase_count
+
+
+# In[46]:
+
+
+SN_pymoli_df = pymoli_df.groupby(["SN"])
+SN_pymoli_df.head()
+
+
+# In[47]:
+
+
+SN_Average_Purchase_Price= SN_pymoli_df["Price"].mean()
+SN_Average_Purchase_Price
+
+
+# In[48]:
+
+
+SN_total_Purchase_Value =SN_pymoli_df["Price"].sum()
+SN_total_Purchase_Value 
+
+
+# In[49]:
+
+
+print("Top Spenders")
+top_spenders_table = pd.DataFrame({"Purchase Count":SN_purchase_count,
+                                                 "Average Purchase Price": SN_Average_Purchase_Price, 
+                                                 "Total Purchase Value":SN_total_Purchase_Value})
+
+top_spenders_table.head()
+
+
+# In[50]:
+
+
+print("Top Spenders")
+top_spenders_table = top_spenders_table.sort_values("Total Purchase Value", ascending=False)
+top_spenders_table.head()
+
+
+# In[51]:
+
+
+import pandas as pd
+import numpy as np
+
+
+# In[52]:
+
+
+pymoli = "purchase_data.csv"
+
+
+pymoli_df = pd.read_csv(pymoli)
+
+pymoli_df.head()
+
+
+# In[53]:
+
+
+#Item ID, Item Name, and Item Price
+Most_Popular_Items= pymoli_df[["Item ID","Item Name", "Price"]]
+Most_Popular_Items.head()
+
+
+# In[54]:
+
+
+ID_and_Name_pymoli_df = pymoli_df.groupby(["Item Name"])
+ID_and_Name_pymoli_df .head()
+
+
+# In[55]:
+
+
+ID_and_Name_purchase_count = pymoli_df["Item Name"].value_counts()
+ID_and_Name_purchase_count
+
+
+# In[56]:
+
+
+ID_and_Name_Average_Purchase_Price= ID_and_Name_pymoli_df["Price"].mean()
+ID_and_Name_Average_Purchase_Price
+
+
+# In[57]:
+
+
+ID_and_Name_total_Purchase_Value =ID_and_Name_pymoli_df["Price"].sum()
+ID_and_Name_total_Purchase_Value 
+
+
+# In[58]:
+
+
+print("Most Popular Items")
+Most_Popular_Items = pd.DataFrame({"Purchase Count":ID_and_Name_purchase_count,
+                                    "Average Purchase Price":ID_and_Name_Average_Purchase_Price, 
+                                     "Total Purchase Value":ID_and_Name_total_Purchase_Value})
+
+Most_Popular_Items.head()
+
+
+# In[59]:
+
+
+print("Most Popular Items")
+Most_Popular_Items = Most_Popular_Items.sort_values("Purchase Count", ascending=False)
+Most_Popular_Items.head()
+
+
+# In[60]:
+
+
+
+print("Most Profitable Items")
+Most_Popular_Items = Most_Popular_Items.sort_values("Total Purchase Value", ascending=False)
+Most_Popular_Items.head()
+
+
+	
